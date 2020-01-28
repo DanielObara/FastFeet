@@ -115,9 +115,7 @@ $ yarn dev
 ## :memo: License
 
 This project is under the MIT license. See the [LICENSE](https://github.com/danielobara/desafiofastfeet/blob/master/LICENSE) for more information.
-
 ---
-
 Made with ♥ by Daniel Obara :wave: [Get in touch!](https://www.linkedin.com/in/danielobara/)
 
 [nodejs]: https://nodejs.org/
