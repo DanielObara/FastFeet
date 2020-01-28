@@ -3,6 +3,10 @@
 </h1>
 
 <p align="center">
+  <a href="https://www.codefactor.io/repository/github/danielobara/desafiofastfeet">
+    <img src="https://www.codefactor.io/repository/github/danielobara/desafiofastfeet/badge" alt="CodeFactor" />
+  </a>
+  
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/danielobara/desafiofastfeet?color=%2304D361">
 
   <a href="https://www.linkedin.com/in/danielobara/">
