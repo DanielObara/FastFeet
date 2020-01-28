@@ -73,7 +73,7 @@
 -   [date-fns](https://date-fns.org/)
 -   [Sentry](https://sentry.io/)
 -   [DotEnv](https://www.npmjs.com/package/dotenv)
--   [VS Code][vc] with [ESLint][vceslint]
+-   [VS Code][vc] with [ESLint][vceslint], [EditorConfig][vceditconfig] and [Prettier][prettier]
 
 ## :information_source: How To Use
 
@@ -124,3 +124,4 @@ Made with ♥ by Daniel Obara :wave: [Get in touch!](https://www.linkedin.com/in
 [vc]: https://code.visualstudio.com/
 [vceditconfig]: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
 [vceslint]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+[prettier]: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
