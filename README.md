@@ -3,9 +3,8 @@
 </h1>
 
 <p align="center">
-  <a href="https://www.codefactor.io/repository/github/danielobara/desafiofastfeet">
-    <img src="https://www.codefactor.io/repository/github/danielobara/desafiofastfeet/badge" alt="CodeFactor" />
-  </a>
+
+  <img src="[![Codacy Badge](https://api.codacy.com/project/badge/Grade/764eee83d7604873a9b06d37c4689523)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DanielObara/DesafioFastFeet&amp;utm_campaign=Badge_Grade)"/>
   
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/danielobara/desafiofastfeet?color=%2304D361">
 
