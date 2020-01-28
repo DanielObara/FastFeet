@@ -16,7 +16,9 @@
     <img alt="Stargazers" src="https://img.shields.io/github/stars/danielobara/desafiofastfeet?style=social">
   </a>
   
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/danielobara/desafiofastfeet.svg">
+  <a>
+    <img alt="Repository size" src="https://img.shields.io/github/repo-size/danielobara/desafiofastfeet.svg">
+  </a>
   
   <a href="https://github.com/danielobara/desafiofastfeet/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/danielobara/desafiofastfeet.svg">
