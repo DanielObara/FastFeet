@@ -21,6 +21,24 @@ class RecipientController {
     return res.json(recipients);
   }
 
+  async show(request, response) {
+    const schema = Yup.object().shape({
+      id: Yup.number()
+        .positive()
+        .required()
+    });
+
+    if (!(await schema.isValid(request.params)))
+      return response.status(400).json({ error: 'Validation fails' });
+
+    const recipient = await Recipient.findByPk(request.params.id);
+
+    if (!recipient)
+      return response.status(400).json({ error: 'Recipient not found' });
+
+    return response.json(recipient);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
