@@ -17,17 +17,20 @@
     "queue": "nodemon src/queue.js"
   },
   "dependencies": {
+    "@sentry/node": "5.12.2",
     "bcryptjs": "^2.4.3",
     "bee-queue": "^1.2.2",
     "cors": "^2.8.5",
     "date-fns": "^2.9.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "express-handlebars": "^3.1.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.17.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3",
+    "youch": "^2.0.10",
     "yup": "^0.28.0"
   },
   "devDependencies": {

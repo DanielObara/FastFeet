@@ -3,12 +3,11 @@ import * as Yup from 'yup';
 import Recipient from '../models/Recipient';
 
 class RecipientController {
-
   async index(req, res) {
     const recipients = await Recipient.findAll();
 
     if (!recipients.length > 0) {
-     return res.status(400).json({ msg: "Don't have any data" });
+      return res.status(400).json({ msg: "Don't have any data" });
     }
 
     return res.json(recipients);
@@ -33,20 +32,6 @@ class RecipientController {
   }
 
   async store(req, res) {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      street: Yup.string().required(),
-      number: Yup.number().required(),
-      complement: Yup.number(),
-      state: Yup.string().required(),
-      city: Yup.string().required(),
-      zip_code: Yup.string().required()
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
-    }
-
     const recipientExists = await Recipient.findOne({
       where: { name: req.body.name }
     });
@@ -61,20 +46,6 @@ class RecipientController {
   }
 
   async update(req, res) {
-    const schema = Yup.object().shape({
-      name: Yup.string(),
-      street: Yup.string(),
-      number: Yup.number(),
-      complement: Yup.number(),
-      state: Yup.string(),
-      city: Yup.string(),
-      zip_code: Yup.string()
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
-    }
-
     const { id } = req.params;
 
     const recipientExists = await Recipient.findByPk(id);
@@ -99,7 +70,7 @@ class RecipientController {
 
     await recipientExists.destroy(id);
 
-    return res.json();
+    return res.json({ msg: 'Recipient successfully deleted' });
   }
 }
 
