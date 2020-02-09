@@ -3,20 +3,13 @@ import * as Yup from 'yup';
 import Recipient from '../models/Recipient';
 
 class RecipientController {
+
   async index(req, res) {
-    const { id } = req.query;
-
-    if (id) {
-      const recipientExists = await Recipient.findByPk(id);
-
-      if (!recipientExists) {
-        return res.status(400).json({ error: 'Recipient not found.' });
-      }
-
-      return res.json(recipientExists);
-    }
-
     const recipients = await Recipient.findAll();
+
+    if (!recipients.length > 0) {
+     return res.status(400).json({ msg: "Don't have any data" });
+    }
 
     return res.json(recipients);
   }
