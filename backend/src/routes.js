@@ -7,6 +7,7 @@ import SessionController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
 import UserController from './app/controllers/UserController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import FileController from './app/controllers/FileController';
 
 import validateSessionStore from './app/validators/SessionStore';
 import validateUserStore from './app/validators/User';
