@@ -1,5 +1,3 @@
-import * as Yup from 'yup';
-
 import Recipient from '../models/Recipient';
 
 class RecipientController {
@@ -14,19 +12,9 @@ class RecipientController {
   }
 
   async show(request, response) {
-    const schema = Yup.object().shape({
-      id: Yup.number()
-        .positive()
-        .required()
-    });
-
-    if (!(await schema.isValid(request.params)))
-      return response.status(400).json({ error: 'Validation fails' });
-
     const recipient = await Recipient.findByPk(request.params.id);
 
-    if (!recipient)
-      return response.status(400).json({ error: 'Recipient not found' });
+    if (!recipient) response.status(400).json({ error: 'Recipient not found' });
 
     return response.json(recipient);
   }
@@ -50,9 +38,8 @@ class RecipientController {
 
     const recipientExists = await Recipient.findByPk(id);
 
-    if (!recipientExists) {
-      return res.status(400).json({ error: 'Recipient not found.' });
-    }
+    if (!recipientExists)
+      res.status(400).json({ error: 'Recipient not found.' });
 
     const recipient = await recipientExists.update(req.body);
 
@@ -62,15 +49,12 @@ class RecipientController {
   async delete(req, res) {
     const { id } = req.params;
 
-    const recipientExists = await Recipient.findByPk(id);
+    if (!(await Recipient.findByPk(id)))
+      res.status(400).json({ error: 'Recipient not found' });
 
-    if (!recipientExists) {
-      return res.status(400).json({ error: 'Recipient not found' });
-    }
+    (await Recipient.findByPk(id)).destroy();
 
-    await recipientExists.destroy(id);
-
-    return res.json({ msg: 'Recipient successfully deleted' });
+    return res.status(200).json({ msg: 'Recipient successfully deleted' });
   }
 }
 
