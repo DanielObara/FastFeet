@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer';
 
 import multer from 'multer';
 import multerConfig from './config/multer';
@@ -52,11 +54,7 @@ routes.post(
   validateDeliverymenStore,
   DeliverymanController.store
 );
-routes.put(
-  '/deliverymen',
-  validateDeliverymenUpdate,
-  DeliverymanController.update
-);
+routes.put('/deliverymen/:id',validateDeliverymenUpdate, DeliverymanController.update);
 routes.get('/deliverymen', DeliverymanController.index);
 routes.get(
   '/deliverymen/:id',

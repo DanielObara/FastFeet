@@ -1,4 +1,4 @@
-import Deliveryman from '../models/DeliveryMan';
+import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
 class DeliverymanController {
@@ -27,7 +27,7 @@ class DeliverymanController {
   async store(req, res) {
     const { email } = req.body;
 
-    if (!(await Deliveryman.findOne({ where: { email } })))
+    if (await Deliveryman.findOne({ where: { email } }))
       res.status(400).json({ error: 'Deliveryman already exists' });
 
     const deliveryman = await Deliveryman.create(req.body);
@@ -37,19 +37,22 @@ class DeliverymanController {
 
   async update(req, res) {
     const { email } = req.body;
+    console.log('TCL: DeliverymanController -> update -> email', email);
 
     const deliveryman = await Deliveryman.findByPk(req.params.id);
 
     if (email && email !== deliveryman.email) {
-      const deliverymanExists = await Deliveryman.findOne({ where: { email } });
+      const deliverymanExists = await Deliveryman.findOne({
+        where: { email: email }
+      });
 
-      if (deliverymanExists)
+      if (await Deliveryman.findOne({ where: { email } }))
         res.status(400).json({ error: 'Deliveryman already exists' });
     }
 
     const { id, name, avatar_id } = await deliveryman.update(req.body);
 
-    return res.json({
+    return res.status(200).json({
       id,
       name,
       email,
