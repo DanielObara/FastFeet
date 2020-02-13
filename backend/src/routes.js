@@ -26,15 +26,8 @@ const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post('/sessions', validateSessionStore, SessionController.store);
-<<<<<<< HEAD
-routes.post('/users', UserController.store);
-routes.post('/files', upload.single('file'), (req, res) => {
-  return res.json({ msg: 'deu certo!' });
-});
-=======
 routes.post('/users', validateUserStore, UserController.store);
 
->>>>>>> 5f13811895112923d1142a02ea73745122922447
 // A partir daqui as rotas abaixo passam a precisar da autenticação.
 routes.use(authMiddleware);
 
@@ -61,11 +54,7 @@ routes.post(
   validateDeliverymenStore,
   DeliverymanController.store
 );
-routes.put(
-  '/deliverymen',
-  validateDeliverymenUpdate,
-  DeliverymanController.update
-);
+routes.put('/deliverymen/:id',validateDeliverymenUpdate, DeliverymanController.update);
 routes.get('/deliverymen', DeliverymanController.index);
 routes.get(
   '/deliverymen/:id',

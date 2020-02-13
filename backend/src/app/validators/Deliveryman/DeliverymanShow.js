@@ -7,7 +7,7 @@ export default async (req, res, next) => {
         .positive()
         .required()
     });
-    await schema.validate(req.body, { abortEarly: false });
+    await schema.validate(req.params, { abortEarly: false });
     return next();
   } catch (error) {
     return res

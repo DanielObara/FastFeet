@@ -6,11 +6,11 @@ export default async (req, res, next) => {
       name: Yup.string()
         .min(2, 'Name must be at least 2 characters.')
         .max(100, 'Name has a maximum limit of 100 characters.')
-        .required('Name is required.'),
+        .required(),
       email: Yup.string()
         .max(100, 'E-mail has a maximum limit of 100 characters')
-        .required('E-mail is required.'),
-      avatar_id: Yup.number().required('Avatar_id is required')
+        .required(),
+      avatar_id: Yup.number()
     });
 
     await schema.validate(req.body, { abortEarly: false });
