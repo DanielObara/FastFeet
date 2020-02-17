@@ -6,9 +6,9 @@ import SessionController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
 import UserController from './app/controllers/UserController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import validateSessionStore from './app/validators/SessionStore';
 import FileController from './app/controllers/FileController';
 
-import validateSessionStore from './app/validators/SessionStore';
 import validateUserStore from './app/validators/User';
 import validateRecipientStore from './app/validators/Recipient/RecipientStore';
 import validateRecipientUpdate from './app/validators/Recipient/RecipientUpdate';
@@ -24,6 +24,7 @@ const upload = multer(multerConfig);
 
 routes.post('/sessions', validateSessionStore, SessionController.store);
 routes.post('/users', validateUserStore, UserController.store);
+routes.post('/files', upload.single('file'), FileController.store);
 
 // A partir daqui as rotas abaixo passam a precisar da autenticação.
 routes.use(authMiddleware);
@@ -43,8 +44,6 @@ routes.delete(
   validateRecipientShowOrDelete,
   RecipientController.delete
 );
-
-routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post(
   '/deliverymen',
