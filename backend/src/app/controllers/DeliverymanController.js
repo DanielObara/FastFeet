@@ -37,7 +37,6 @@ class DeliverymanController {
 
   async update(req, res) {
     const { email } = req.body;
-    console.log('TCL: DeliverymanController -> update -> email', email);
 
     const deliveryman = await Deliveryman.findByPk(req.params.id);
 
