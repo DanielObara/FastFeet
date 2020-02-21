@@ -86,11 +86,11 @@ class DeliveryController {
     const deliveryman = await Deliveryman.findByPk(deliveryman_id);
     const recipient = await Recipient.findByPk(recipient_id);
 
-    await Queue.add(DetailMail.key, {
-      delivery,
-      deliveryman,
-      recipient
-    });
+    // await Queue.add(DetailMail.key, {
+    //   delivery,
+    //   deliveryman,
+    //   recipient
+    // });
 
     return res.json(delivery);
   }
