@@ -29,11 +29,6 @@
   <a href="https://github.com/danielobara/desafiofastfeet/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/danielobara/desafiofastfeet.svg">
   </a>
-  
-  <a href="https://github.com/danielobara/desafiofastfeet/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/danielobara/desafiofastfeet.svg">
-  </a>
-  
    <a href="https://github.com/DanielObara/DesafioFastFeet/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/danielobara/desafiofastfeet?style=social">
   </a>
