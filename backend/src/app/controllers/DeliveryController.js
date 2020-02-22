@@ -3,7 +3,6 @@ import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
-
 class DeliveryController {
   async index(req, res) {
     const deliveries = await Delivery.findAll({
@@ -25,7 +24,7 @@ class DeliveryController {
             'id',
             'name',
             'street',
-            'zipcode',
+            'zip_code',
             'number',
             'state',
             'city',
@@ -52,7 +51,6 @@ class DeliveryController {
   }
 
   async store(req, res) {
-
     const { deliveryman_id, recipient_id, product } = req.body;
 
     const checkDeliverymanExists = await Deliveryman.findOne({
@@ -96,7 +94,6 @@ class DeliveryController {
   }
 
   async update(req, res) {
-
     const { deliveryman_id, recipient_id } = req.body;
 
     const checkDeliverymanExists = await Deliveryman.findOne({
