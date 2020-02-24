@@ -6,6 +6,7 @@ import SessionController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
 import UserController from './app/controllers/UserController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import DeliveryController from './app/controllers/DeliveryController';
 import FileController from './app/controllers/FileController';
 
 import validateSessionStore from './app/validators/SessionStore';
@@ -25,13 +26,16 @@ const upload = multer(multerConfig);
 routes.post('/sessions', validateSessionStore, SessionController.store);
 routes.post('/users', validateUserStore, UserController.store);
 
-// A partir daqui as rotas abaixo passam a precisar da autenticação.
 routes.use(authMiddleware);
 
 routes.get('/users', UserController.index);
 
 routes.post('/recipients', validateRecipientStore, RecipientController.store);
-routes.put('/recipients', validateRecipientUpdate, RecipientController.update);
+routes.put(
+  '/recipients/:id',
+  validateRecipientUpdate,
+  RecipientController.update
+);
 routes.get('/recipients', RecipientController.index);
 routes.get(
   '/recipients/:id',
@@ -66,4 +70,9 @@ routes.delete(
   validateDeliverymenShowOrDelete,
   DeliverymanController.delete
 );
+
+routes.post('/deliveries', DeliveryController.store);
+routes.put('/deliveries/:id', DeliveryController.update);
+routes.get('/deliveries', DeliveryController.index);
+// routes.get('/deliveries/:id', DeliveryController.show);
 export default routes;
