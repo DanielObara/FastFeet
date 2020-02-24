@@ -101,7 +101,7 @@ class DeliveryController {
       where: { id: recipient_id }
     });
 
-    if (!(checkDeliverymanExists || checkRecipientExists)) {
+    if (!(checkDeliverymanExists && checkRecipientExists)) {
       return res
         .status(400)
         .json({ error: 'Deliveryman and Recipient does not exists' });
@@ -132,9 +132,7 @@ class DeliveryController {
 
     const deliveryExists = await Delivery.findByPk(id);
 
-    if (!deliveryExists) {
-      return res.status(400).json({ error: 'Delivery not exists' });
-    }
+    if (!deliveryExists) res.status(400).json({ error: 'Delivery not exists' });
 
     await Delivery.destroy({ where: { id } });
 
