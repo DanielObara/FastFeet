@@ -5,33 +5,19 @@ export default async (req, res, next) => {
     const schema = Yup.object().shape({
       name: Yup.string()
         .min(2, 'Name must be at least 2 characters.')
-        .max(100, 'Name has a maximum limit of 100 characters.')
-        .required(),
-      street: Yup.string().when('zip_code', (zip_code, field) =>
-        zip_code
-          ? field
-              .min(2, 'Street must be at least 2 characters.')
-              .max(100, 'Street has a maximum limit of 100 characters.')
-              .required()
-          : field
-      ),
-
-      number: Yup.number().required(),
+        .max(100, 'Name has a maximum limit of 100 characters.'),
+      street: Yup.string()
+        .min(2, 'Street must be at least 2 characters.')
+        .max(100, 'Street has a maximum limit of 100 characters.'),
+      number: Yup.number(),
       complement: Yup.number(),
-      state: Yup.string().when('uf', (uf, field) =>
-        uf
-          ? field
-              .min(2, 'State must be at least 2 characters.')
-              .max(100, 'State has a maximum limit of 100 characters.')
-              .required()
-          : field
-      ),
-
+      state: Yup.string()
+        .min(2, 'State must be at least 2 characters.')
+        .max(100, 'State has a maximum limit of 100 characters.'),
       city: Yup.string()
         .min(2, 'City must be at least 2 characters.')
-        .max(100, 'City has a maximum limit of 100 characters.')
-        .required(),
-      zip_code: Yup.string().required()
+        .max(100, 'City has a maximum limit of 100 characters.'),
+      zip_code: Yup.string()
     });
 
     await schema.validate(req.body, { abortEarly: false });

@@ -24,7 +24,7 @@ class DeliveryController {
             'id',
             'name',
             'street',
-            'zipcode',
+            'zip_code',
             'number',
             'state',
             'city',
