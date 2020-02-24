@@ -3,7 +3,6 @@ import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
-
 class DeliveryController {
   async index(req, res) {
     const deliveries = await Delivery.findAll({
@@ -52,7 +51,6 @@ class DeliveryController {
   }
 
   async store(req, res) {
-
     const { deliveryman_id, recipient_id, product } = req.body;
 
     const checkDeliverymanExists = await Deliveryman.findOne({
@@ -63,19 +61,16 @@ class DeliveryController {
       where: { id: recipient_id }
     });
 
-    if (!(checkDeliverymanExists || checkRecipientExists)) {
-      return res
+    if (!(checkDeliverymanExists && checkRecipientExists))
+      res
         .status(400)
         .json({ error: 'Deliveryman and Recipient does not exists' });
-    }
 
-    if (!checkRecipientExists) {
-      return res.status(400).json({ error: 'Recipient does not exists' });
-    }
+    if (!checkRecipientExists)
+      res.status(400).json({ error: 'Recipient does not exists' });
 
-    if (!checkDeliverymanExists) {
-      return res.status(400).json({ error: 'Deliveryman does not exists' });
-    }
+    if (!checkDeliverymanExists)
+      res.status(400).json({ error: 'Deliveryman does not exists' });
 
     const delivery = await Delivery.create({
       product,
@@ -96,7 +91,6 @@ class DeliveryController {
   }
 
   async update(req, res) {
-
     const { deliveryman_id, recipient_id } = req.body;
 
     const checkDeliverymanExists = await Deliveryman.findOne({
