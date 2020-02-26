@@ -61,19 +61,16 @@ class DeliveryController {
       where: { id: recipient_id }
     });
 
-    if (!(checkDeliverymanExists || checkRecipientExists)) {
-      return res
+    if (!(checkDeliverymanExists && checkRecipientExists))
+      res
         .status(400)
         .json({ error: 'Deliveryman and Recipient does not exists' });
-    }
 
-    if (!checkRecipientExists) {
-      return res.status(400).json({ error: 'Recipient does not exists' });
-    }
+    if (!checkRecipientExists)
+      res.status(400).json({ error: 'Recipient does not exists' });
 
-    if (!checkDeliverymanExists) {
-      return res.status(400).json({ error: 'Deliveryman does not exists' });
-    }
+    if (!checkDeliverymanExists)
+      res.status(400).json({ error: 'Deliveryman does not exists' });
 
     const delivery = await Delivery.create({
       product,
@@ -104,7 +101,7 @@ class DeliveryController {
       where: { id: recipient_id }
     });
 
-    if (!(checkDeliverymanExists || checkRecipientExists)) {
+    if (!(checkDeliverymanExists && checkRecipientExists)) {
       return res
         .status(400)
         .json({ error: 'Deliveryman and Recipient does not exists' });
@@ -135,9 +132,7 @@ class DeliveryController {
 
     const deliveryExists = await Delivery.findByPk(id);
 
-    if (!deliveryExists) {
-      return res.status(400).json({ error: 'Delivery not exists' });
-    }
+    if (!deliveryExists) res.status(400).json({ error: 'Delivery not exists' });
 
     await Delivery.destroy({ where: { id } });
 
