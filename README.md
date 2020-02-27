@@ -32,7 +32,7 @@
    <a href="https://github.com/DanielObara/DesafioFastFeet/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/danielobara/desafiofastfeet?style=social">
   </a>
-  
+  [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Desafio%20FastFeet&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDanielObara%2FFastFeet%2Fmaster%2FInsomnia_2020-02-26.json)
 </p>
 
 <p align="center">
