@@ -50,6 +50,14 @@ class DeliveryController {
     return res.json(deliveries);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const deliveryExists = await Delivery.findByPk(id);
+
+    return res.status(200).json(deliveryExists);
+  }
+
   async store(req, res) {
     const { deliveryman_id, recipient_id, product } = req.body;
 
