@@ -2,7 +2,12 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const recipients = await Recipient.findAll();
+    const { page = 1 } = req.query;
+    const LIMIT = 20;
+    const recipients = await Recipient.findAll({
+      limit: LIMIT,
+      offset: (page - 1) * LIMIT
+    });
 
     if (!recipients.length > 0) {
       return res.status(400).json({ msg: "Don't have any data" });

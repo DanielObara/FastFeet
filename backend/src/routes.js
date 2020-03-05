@@ -19,6 +19,7 @@ import validateDeliverymenUpdate from './app/validators/Deliveryman/DeliverymanU
 import validateDeliverymenShowOrDelete from './app/validators/Deliveryman/DeliverymanShow';
 
 import authMiddleware from './app/middlewares/auth';
+import DeliveryDashboardController from './app/controllers/DeliveryDashboardController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -77,5 +78,13 @@ routes.get('/deliveries', DeliveryController.index);
 routes.get('/deliveries/:id', DeliveryController.show);
 routes.delete('/deliveries/:id', DeliveryController.delete);
 
-routes.put('/deliverymen/:id/deliveries/:deliveryId');
+routes.put(
+  '/deliverymen/:id/deliveries/:deliveryId',
+  DeliveryDashboardController.update
+);
+routes.get(
+  '/deliverymen/:id/deliveries/:deliveryId',
+  DeliveryDashboardController.index
+);
+
 export default routes;

@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
@@ -5,7 +6,12 @@ import File from '../models/File';
 
 class DeliveryController {
   async index(req, res) {
-    const deliveries = await Delivery.findAll({
+    const { page = 1, product = '' } = req.query;
+    const LIMIT = 20;
+    const { rows: deliveries, count } = await Delivery.findAndCountAll({
+      limit: LIMIT,
+      offset: (page - 1) * LIMIT,
+      where: { product: { [Op.iLike]: `%${product}%` } },
       include: [
         {
           model: Deliveryman,
@@ -47,7 +53,7 @@ class DeliveryController {
         'end_date'
       ]
     });
-    return res.json(deliveries);
+    return res.set({ total_pages: Math.ceil(count / LIMIT) }).json(deliveries);
   }
 
   async show(req, res) {
@@ -142,9 +148,9 @@ class DeliveryController {
 
     if (!deliveryExists) res.status(400).json({ error: 'Delivery not exists' });
 
-    await Delivery.destroy({ where: { id } });
+    await deliveryExists.destroy({ where: { id } });
 
-    return res.status(200).json();
+    return res.status(200).json({ msg: 'Delivery was successfully deleted' });
   }
 }
 

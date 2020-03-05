@@ -18,8 +18,12 @@ class DeliveryDashboardController {
   async index(req, res) {
     const { deliveryman_id } = req.params;
     const { isDone } = req.body;
+    const { page = 1 } = req.query;
+    const LIMIT = 2;
 
-    const deliveries = await Delivery.findAll({
+    const { rows: deliveries, count } = await Delivery.findAndCountAll({
+      limit: LIMIT,
+      offset: (page - 1) * LIMIT,
       where: {
         deliveryman_id,
         end_date: isDone ? !null : null,
@@ -66,7 +70,7 @@ class DeliveryDashboardController {
         'end_date'
       ]
     });
-    return res.json(deliveries);
+    return res.set({ total_pages: Math.ceil(count / LIMIT) }).json(deliveries);
   }
 
   async update(req, res) {

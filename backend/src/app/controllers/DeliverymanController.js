@@ -1,9 +1,18 @@
+import { Op } from 'sequelize';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
-    const deliverymen = await Deliveryman.findAll({
+    const { page = 1, name = '' } = req.query;
+    const LIMIT = 20;
+
+    const { rows: deliverymen, count } = await Deliveryman.findAndCountAll({
+      limit: LIMIT,
+      offset: (page - 1) * LIMIT,
+      where: {
+        name: { [Op.iLike]: `%${name}%` }
+      },
       attributes: ['id', 'name', 'email', 'avatar_id'],
       include: [
         {
@@ -13,7 +22,7 @@ class DeliverymanController {
         }
       ]
     });
-    return res.json(deliverymen);
+    return res.set({ total_pages: Math.ceil(count / LIMIT) }).json(deliverymen);
   }
 
   async show(req, res) {
@@ -65,7 +74,7 @@ class DeliverymanController {
     if (!deliverymanExists)
       res.status(400).json({ error: 'Deliveryman not exists' });
 
-    await Deliveryman.destroy(id);
+    await deliverymanExists.destroy(id);
 
     return res.status(200).json({ msg: 'Deliveryman successfully deleted' });
   }
