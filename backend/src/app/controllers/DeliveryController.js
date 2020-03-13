@@ -3,6 +3,7 @@ import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
+import Mail from '../../lib/Mail';
 
 class DeliveryController {
   async index(req, res) {
@@ -100,6 +101,12 @@ class DeliveryController {
     //   deliveryman,
     //   recipient
     // });
+
+    await Mail.sendMail({
+      to: `${delivery.name} <${deliveryman.email}`,
+      subject: 'New delivery was asigned to you!',
+      text: 'You have a new delivery to do!'
+    });
 
     return res.json(delivery);
   }
