@@ -1,8 +1,13 @@
 <strong>Hi {{ deliveryman }}!</strong>
-<p>A new delivery was designated to you. See below more details:
+<p>A new delivery was designated to you! </p>
+<p>See below more details:</p>
 
-  <strong>{{ deliveryid }}</strong></p>
+<strong>Delivery nº: </strong>{{ deliveryid }}<br />
+
 <p>
+  <strong>Receiver: </strong> {{ receiver }} <br />
+  <strong>Product: </strong> {{ product }}<br />
 
-  <br />
+  <strong>Address: </strong>{{ street }},{{ number }},{{ zipCode }},{{ city }}, {{ country }},
+  <strong>Complement: </strong> {{ complement }}
 </p>

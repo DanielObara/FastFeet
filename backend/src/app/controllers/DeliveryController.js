@@ -68,23 +68,19 @@ class DeliveryController {
   async store(req, res) {
     const { deliveryman_id, recipient_id, product } = req.body;
 
-    const checkDeliverymanExists = await Deliveryman.findOne({
-      where: { id: deliveryman_id }
-    });
+    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
 
-    const checkRecipientExists = await Recipient.findOne({
-      where: { id: recipient_id }
-    });
+    const recipient = await Recipient.findByPk(recipient_id);
 
-    if (!(checkDeliverymanExists && checkRecipientExists))
+    if (!(deliveryman && recipient))
       res
         .status(400)
         .json({ error: 'Deliveryman and Recipient does not exists' });
 
-    if (!checkRecipientExists)
+    if (!recipient)
       res.status(400).json({ error: 'Recipient does not exists' });
 
-    if (!checkDeliverymanExists)
+    if (!deliveryman)
       res.status(400).json({ error: 'Deliveryman does not exists' });
 
     const delivery = await Delivery.create({
@@ -92,9 +88,6 @@ class DeliveryController {
       deliveryman_id,
       recipient_id
     });
-
-    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
-    const recipient = await Recipient.findByPk(recipient_id);
 
     // await Queue.add(DetailMail.key, {
     //   delivery,
@@ -105,7 +98,19 @@ class DeliveryController {
     await Mail.sendMail({
       to: `${delivery.name} <${deliveryman.email}`,
       subject: 'New delivery was asigned to you!',
-      text: 'You have a new delivery to do!'
+      template: 'NewOrder',
+      context: {
+        deliveryman: deliveryman.name,
+        deliveryid: delivery.id,
+        receiver: recipient.name,
+        product: delivery.product,
+        street: recipient.street,
+        number: recipient.number,
+        zipCode: recipient.zip_code,
+        complement: recipient.complement,
+        city: recipient.city,
+        state: recipient.state
+      }
     });
 
     return res.json(delivery);
