@@ -17,7 +17,6 @@ import File from '../models/File';
 class DeliveryDashboardController {
   async index(req, res) {
     const { deliveryman_id } = req.params;
-    const { end_date = null, start_date = null } = req.body;
     const { page = 1 } = req.query;
     const LIMIT = 2;
 
@@ -26,10 +25,12 @@ class DeliveryDashboardController {
       offset: (page - 1) * LIMIT,
       where: {
         deliveryman_id,
-        end_date: end_date || null,
-        start_date: start_date || null,
-        canceled_at: null
+        canceled_at: null,
+        end_date: {
+          [Op.not]: null
+        }
       },
+      order: [['id', 'DESC']],
       include: [
         {
           model: Deliveryman,
@@ -104,10 +105,7 @@ class DeliveryDashboardController {
         .status(400)
         .json({ error: 'Orders pickup only between 08:00AM and 18:00PM' });
 
-    const {
-      count: numbersOfDeliveries,
-      rows: data
-    } = await Delivery.findAndCountAll({
+    const { count: numbersOfDeliveries } = await Delivery.findAndCountAll({
       where: {
         deliveryman_id: id,
         start_date: {
