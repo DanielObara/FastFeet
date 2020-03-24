@@ -16,7 +16,7 @@ import File from '../models/File';
 
 class DeliveryDashboardController {
   async index(req, res) {
-    const { deliveryman_id } = req.params;
+    const { id: deliveryman_id, deliveryId = '' } = req.params;
     const { page = 1 } = req.query;
     const LIMIT = 2;
 
@@ -25,6 +25,7 @@ class DeliveryDashboardController {
       offset: (page - 1) * LIMIT,
       where: {
         deliveryman_id,
+        id: deliveryId,
         canceled_at: null,
         end_date: {
           [Op.not]: null
@@ -72,7 +73,7 @@ class DeliveryDashboardController {
         'end_date'
       ]
     });
-    return res.set({ total_pages: Math.ceil(count / LIMIT) }).json(deliveries);
+    return res.json(deliveries);
   }
 
   async update(req, res) {

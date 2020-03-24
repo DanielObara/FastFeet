@@ -6,10 +6,7 @@ class DeliverymanController {
   async index(req, res) {
     const { page = 1, name = '' } = req.query;
     const LIMIT = 20;
-
-    const { rows: deliverymen, count } = await Deliveryman.findAndCountAll({
-      limit: LIMIT,
-      offset: (page - 1) * LIMIT,
+    const deliveryman = await Deliveryman.findAndCountAll({
       where: {
         name: { [Op.iLike]: `%${name}%` }
       },
@@ -20,9 +17,12 @@ class DeliverymanController {
           as: 'avatar',
           attributes: ['name', 'path', 'url']
         }
-      ]
+      ],
+      order: ['id'],
+      limit: LIMIT,
+      offset: (page - 1) * LIMIT
     });
-    return res.set({ total_pages: Math.ceil(count / LIMIT) }).json(deliverymen);
+    return res.json(deliveryman);
   }
 
   async show(req, res) {

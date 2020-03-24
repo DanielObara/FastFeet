@@ -10,7 +10,7 @@ class DeliveryController {
   async index(req, res) {
     const { page = 1, product = '' } = req.query;
     const LIMIT = 20;
-    const { rows: deliveries, count } = await Delivery.findAndCountAll({
+    const { rows: deliveries } = await Delivery.findAndCountAll({
       limit: LIMIT,
       offset: (page - 1) * LIMIT,
       where: { product: { [Op.iLike]: `%${product}%` } },
@@ -55,7 +55,7 @@ class DeliveryController {
         'end_date'
       ]
     });
-    return res.set({ total_pages: Math.ceil(count / LIMIT) }).json(deliveries);
+    return res.json(deliveries);
   }
 
   async show(req, res) {
