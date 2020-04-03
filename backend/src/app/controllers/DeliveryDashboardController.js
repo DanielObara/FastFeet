@@ -16,16 +16,15 @@ import File from '../models/File';
 
 class DeliveryDashboardController {
   async index(req, res) {
-    const { id: deliveryman_id, deliveryId = '' } = req.params;
+    const { id: deliveryman_id } = req.params;
     const { page = 1 } = req.query;
     const LIMIT = 2;
 
-    const { rows: deliveries, count } = await Delivery.findAndCountAll({
+    const { rows: deliveries } = await Delivery.findAndCountAll({
       limit: LIMIT,
       offset: (page - 1) * LIMIT,
       where: {
         deliveryman_id,
-        id: deliveryId,
         canceled_at: null,
         end_date: {
           [Op.not]: null
@@ -124,12 +123,13 @@ class DeliveryDashboardController {
       }
     });
 
-    if (start_date) {
+    if (UpdatedDelivery.start_date !== null && start_date) {
       UpdatedDelivery.start_date = initialDate;
       await UpdatedDelivery.update();
     } else {
-      UpdatedDelivery.end_date = finalDate;
-      await UpdatedDelivery.update();
+      res
+        .status(400)
+        .json({ error: "You can't withdraw a this delivery again" });
     }
 
     return res.json(UpdatedDelivery);
