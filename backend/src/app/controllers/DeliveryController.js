@@ -73,16 +73,10 @@ class DeliveryController {
 
     const recipient = await Recipient.findByPk(recipient_id);
 
-    if (!(deliveryman && recipient))
+    if (!deliveryman || !recipient)
       res
         .status(400)
-        .json({ error: 'Deliveryman and Recipient does not exists' });
-
-    if (!recipient)
-      res.status(400).json({ error: 'Recipient does not exists' });
-
-    if (!deliveryman)
-      res.status(400).json({ error: 'Deliveryman does not exists' });
+        .json({ error: 'Deliveryman or Recipient does not exists' });
 
     const delivery = await Delivery.create({
       product,

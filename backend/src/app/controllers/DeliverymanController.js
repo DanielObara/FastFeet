@@ -28,7 +28,7 @@ class DeliverymanController {
   async show(req, res) {
     const deliveryman = await Deliveryman.findByPk(req.params.id);
 
-    if (!deliveryman) res.status(400).json({ error: 'Recipient not found' });
+    if (!deliveryman) res.status(400).json({ error: 'Deliveryman not found' });
 
     return res.json(deliveryman);
   }
@@ -37,7 +37,7 @@ class DeliverymanController {
     const { email } = req.body;
 
     if (await Deliveryman.findOne({ where: { email } }))
-      res.status(400).json({ error: 'Deliveryman already exists' });
+      res.status(400).json({ error: 'Deliveryman e-mail already exists' });
 
     const deliveryman = await Deliveryman.create(req.body);
 
