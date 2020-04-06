@@ -5,6 +5,7 @@ import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 import Queue from '../../lib/Queue';
 import NewOrderMail from '../jobs/NewOrderMail';
+import Mail from '../../lib/Mail';
 
 class DeliveryController {
   async index(req, res) {
@@ -84,10 +85,16 @@ class DeliveryController {
       recipient_id
     });
 
-    await Queue.add(NewOrderMail.key, {
-      delivery,
-      deliveryman,
-      recipient
+    // await Queue.add(NewOrderMail.key, {
+    //   delivery,
+    //   deliveryman,
+    //   recipient
+    // });
+
+    await Mail.sendMail({
+      to: `${deliveryman.name} <${deliveryman.email}>`,
+      subject: 'Nova encomenda!',
+      text: 'Você tem uma nova encomenda pendente de envio'
     });
 
     return res.json(delivery);

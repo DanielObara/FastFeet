@@ -15,7 +15,7 @@ class Mail {
       auth: auth.user ? auth : null
     });
 
-    this.cofigureTemplates();
+    // this.cofigureTemplates();
   }
 
   cofigureTemplates() {
