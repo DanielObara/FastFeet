@@ -35,8 +35,7 @@
 </p>
 
 <p align="center">
-  <a href="https://insomnia.rest/run/?label=Desafio%20FastFeet&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDanielObara%2FFastFeet%2Fmaster%2FInsomnia_2020-02-26.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia">
-  </a>
+  <a href="https://insomnia.rest/run/?label=BOOTCAMP%20FASTFEET&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDanielObara%2FFastFeet%2Fmaster%2FInsomnia_2020-04-06.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
   
 <p align="center">
@@ -80,10 +79,10 @@ From your command line:
 ### Install API
 ```bash
 # Clone this repository
-$ git clone https://github.com/DanielObara/DesafioFastFeet
+$ git clone https://github.com/DanielObara/FastFeet
 
 # Go into the repository
-$ cd DesafioFastFeet/backend
+$ cd FastFeet/backend
 
 # Install dependencies
 $ yarn install
@@ -103,6 +102,9 @@ $ yarn migrate
 # Run Seeds
 $ yarn seed
 
+# Run Queue
+$ yarn queue
+
 # Run the API
 $ yarn dev
 ```
@@ -110,7 +112,7 @@ $ yarn dev
 
 ## :memo: License
 
-This project is under the MIT license. See the [LICENSE](https://github.com/danielobara/desafiofastfeet/blob/master/LICENSE) for more information.
+This project is under the MIT license. See the [LICENSE](https://github.com/danielobara/FastFeet/blob/master/LICENSE) for more information.
 ---
 Made with ♥ by Daniel Obara :wave: [Get in touch!](https://www.linkedin.com/in/danielobara/)
 
