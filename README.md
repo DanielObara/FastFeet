@@ -79,10 +79,10 @@ From your command line:
 ### Install API
 ```bash
 # Clone this repository
-$ git clone https://github.com/DanielObara/DesafioFastFeet
+$ git clone https://github.com/DanielObara/FastFeet
 
 # Go into the repository
-$ cd DesafioFastFeet/backend
+$ cd FastFeet/backend
 
 # Install dependencies
 $ yarn install
@@ -102,6 +102,9 @@ $ yarn migrate
 # Run Seeds
 $ yarn seed
 
+# Run Queue
+$ yarn queue
+
 # Run the API
 $ yarn dev
 ```
@@ -109,7 +112,7 @@ $ yarn dev
 
 ## :memo: License
 
-This project is under the MIT license. See the [LICENSE](https://github.com/danielobara/desafiofastfeet/blob/master/LICENSE) for more information.
+This project is under the MIT license. See the [LICENSE](https://github.com/danielobara/FastFeet/blob/master/LICENSE) for more information.
 ---
 Made with ♥ by Daniel Obara :wave: [Get in touch!](https://www.linkedin.com/in/danielobara/)
 
