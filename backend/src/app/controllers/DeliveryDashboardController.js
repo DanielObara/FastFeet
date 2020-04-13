@@ -16,19 +16,18 @@ import File from '../models/File';
 
 class DeliveryDashboardController {
   async index(req, res) {
-    const { id: deliveryman_id } = req.params;
-    const { page = 1 } = req.query;
-    const LIMIT = 2;
+    const { id: deliveryman_id, end_date = null } = req.params;
 
-    const { rows: deliveries } = await Delivery.findAndCountAll({
+    const { page = 1 } = req.query;
+    const LIMIT = 20;
+
+    const deliveries = await Delivery.findAndCountAll({
       limit: LIMIT,
       offset: (page - 1) * LIMIT,
       where: {
         deliveryman_id,
         canceled_at: null,
-        end_date: {
-          [Op.not]: null
-        }
+        end_date
       },
       order: [['id', 'DESC']],
       include: [
@@ -72,7 +71,28 @@ class DeliveryDashboardController {
         'end_date'
       ]
     });
+
     return res.json(deliveries);
+  }
+
+  async show(req, res) {
+    const { deliveryId: id, id: deliveryman_id } = req.params;
+
+    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
+
+    if (!deliveryman)
+      res.status(400).json({ error: 'Deliveryman does not exists' });
+
+    const delivery = await Delivery.findOne({
+      where: {
+        id,
+        deliveryman_id
+      }
+    });
+
+    if (!delivery) res.status(400).json({ error: 'Delivery does not exists' });
+
+    return res.json(delivery);
   }
 
   async update(req, res) {

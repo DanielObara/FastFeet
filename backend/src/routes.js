@@ -31,9 +31,10 @@ routes.put(
   '/deliveryman/:id/deliveries/:deliveryId',
   DeliveryDashboardController.update
 );
+routes.get('/deliveryman/:id/deliveries', DeliveryDashboardController.index);
 routes.get(
   '/deliveryman/:id/deliveries/:deliveryId',
-  DeliveryDashboardController.index
+  DeliveryDashboardController.show
 );
 
 routes.use(authMiddleware);

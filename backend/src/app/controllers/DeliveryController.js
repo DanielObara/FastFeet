@@ -10,7 +10,7 @@ class DeliveryController {
   async index(req, res) {
     const { page = 1, product = '' } = req.query;
     const LIMIT = 20;
-    const { rows: deliveries } = await Delivery.findAndCountAll({
+    const deliveries = await Delivery.findAndCountAll({
       limit: LIMIT,
       offset: (page - 1) * LIMIT,
       where: { product: { [Op.iLike]: `%${product}%` } },
@@ -63,6 +63,9 @@ class DeliveryController {
 
     const deliveryExists = await Delivery.findByPk(id);
 
+    if (!deliveryExists)
+      res.status(400).json({ error: 'Delivery does not exists' });
+
     return res.status(200).json(deliveryExists);
   }
 
@@ -104,19 +107,16 @@ class DeliveryController {
       where: { id: recipient_id }
     });
 
-    if (!(checkDeliverymanExists && checkRecipientExists)) {
-      return res
+    if (!(checkDeliverymanExists && checkRecipientExists))
+      res
         .status(400)
         .json({ error: 'Deliveryman and Recipient does not exists' });
-    }
 
-    if (!checkRecipientExists) {
-      return res.status(400).json({ error: 'Recipient does not exists' });
-    }
+    if (!checkRecipientExists)
+      res.status(400).json({ error: 'Recipient does not exists' });
 
-    if (!checkDeliverymanExists) {
-      return res.status(400).json({ error: 'Deliveryman does not exists' });
-    }
+    if (!checkDeliverymanExists)
+      res.status(400).json({ error: 'Deliveryman does not exists' });
 
     const delivery = await Delivery.findByPk(req.params.id);
 
