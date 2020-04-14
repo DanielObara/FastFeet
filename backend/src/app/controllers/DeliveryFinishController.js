@@ -16,7 +16,8 @@ import File from '../models/File';
 class FinishDeliveryController {
   async update(req, res) {
     const { id, deliveryId } = req.params;
-    const { end_date } = req.body;
+    const { signatureId } = req.body;
+
     if (
       !(await Deliveryman.findOne({
         where: { id }
@@ -29,23 +30,35 @@ class FinishDeliveryController {
         id: deliveryId,
         start_date: {
           [Op.ne]: null
-        }
+        },
+        signature_id: null
       }
     });
 
     if (!delivery) res.status(400).json({ error: 'Delivery does not exists' });
 
     const initialDate = parseISO(delivery.start_date);
-    const finalDate = parseISO(end_date);
+    const finalDate = parseISO(new Date());
 
     // if (start_date && isBefore(initialDate, new Date()))
     //   res.status(400).json({ error: 'Past dates are not allowed !' });
 
-    if (end_date && isBefore(finalDate, initialDate))
+    if (isBefore(finalDate, initialDate))
       res.status(400).json({
         error: 'Delivery date must be after the withdrawal date'
       });
 
+    const signature = await File.findByPk(signatureId);
+
+    if (!signature)
+      res.status(400).json({
+        error: 'Signature does not found!'
+      });
+
+    await delivery.update({
+      end_date: new Date(),
+      signature_id: signatureId
+    });
     // const initialHour = setSeconds(setMinutes(setHours(initialDate, 8), 0), 0);
     // const finalHour = setSeconds(setMinutes(setHours(initialDate, 18), 0), 0);
 
@@ -81,7 +94,7 @@ class FinishDeliveryController {
     //   });
     // }
 
-    return res.json();
+    return res.json(delivery);
   }
 }
 
