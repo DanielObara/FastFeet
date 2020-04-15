@@ -16,7 +16,7 @@ import File from '../models/File';
 
 class DeliveryDashboardController {
   async index(req, res) {
-    const { id: deliveryman_id, end_date = null } = req.params;
+    const { id: deliveryman_id, signature_id = null } = req.params;
 
     const { page = 1 } = req.query;
     const LIMIT = 20;
@@ -27,7 +27,7 @@ class DeliveryDashboardController {
       where: {
         deliveryman_id,
         canceled_at: null,
-        end_date
+        signature_id
       },
       order: [['id', 'DESC']],
       include: [
@@ -104,18 +104,10 @@ class DeliveryDashboardController {
     )
       res.status(400).json({ error: 'Deliveryman does not exists' });
 
-    const { start_date, end_date } = req.body;
+    const initialDate = new Date();
 
-    const initialDate = parseISO(start_date);
-    const finalDate = parseISO(end_date);
-
-    if (start_date && isBefore(initialDate, new Date()))
+    if (initialDate && isBefore(initialDate, new Date()))
       res.status(400).json({ error: 'Past dates are not allowed !' });
-
-    if (end_date && isBefore(finalDate, initialDate))
-      res
-        .status(400)
-        .json({ error: 'Delivery date must be after the withdrawal date' });
 
     const initialHour = setSeconds(setMinutes(setHours(initialDate, 8), 0), 0);
     const finalHour = setSeconds(setMinutes(setHours(initialDate, 18), 0), 0);
@@ -143,14 +135,9 @@ class DeliveryDashboardController {
       }
     });
 
-    if (UpdatedDelivery.start_date !== null && start_date) {
-      UpdatedDelivery.start_date = initialDate;
-      await UpdatedDelivery.update();
-    } else {
-      res
-        .status(400)
-        .json({ error: "You can't withdraw a this delivery again" });
-    }
+    await UpdatedDelivery.update({
+      start_date: initialDate
+    });
 
     return res.json(UpdatedDelivery);
   }
