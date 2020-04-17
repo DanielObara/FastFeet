@@ -4,6 +4,6 @@ const schema = Yup.object(req.body).shape({
   deliveryman_id: Yup.number().required()
 });
 
-if (!(await schema.isValid(req.body))) {
+if (!(schema.isValid(req.body))) {
   return res.status(400).json({ error: 'Validation fail' });
 }
