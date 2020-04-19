@@ -6,7 +6,7 @@
  :construction: In progress.. :construction:
 </h3>
 
-<p align="center">This challenge is part of the Final Challenge, which is a complete application(
+<p align="center">This project is the final challenge called FastFeet, which is a complete application(
   <a href="#gear-back-end">Back-end</a>, 
   <a href="#">Front-end</a> and 
   <a href="#">Mobile</a>) that is evaluated for issuing the GoStack Bootcamp Certificate</p>
