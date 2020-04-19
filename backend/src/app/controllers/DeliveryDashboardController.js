@@ -15,7 +15,8 @@ import File from '../models/File';
 
 class DeliveryDashboardController {
   async index(req, res) {
-    const { id: deliveryman_id, signature_id = null } = req.params;
+    const { id: deliveryman_id } = req.params;
+    const isDone = req.query.isDone == 'true';
 
     const { page = 1 } = req.query;
     const LIMIT = 20;
@@ -26,7 +27,7 @@ class DeliveryDashboardController {
       where: {
         deliveryman_id,
         canceled_at: null,
-        signature_id
+        signature_id: isDone ? { [Op.ne]: null } : null
       },
       order: [['id', 'DESC']],
       include: [
@@ -95,50 +96,54 @@ class DeliveryDashboardController {
   }
 
   async update(req, res) {
-    const { id } = req.params;
-    if (
-      !(await Deliveryman.findOne({
-        where: { id }
-      }))
-    )
-      res.status(400).json({ error: 'Deliveryman does not exists' });
+    const { id: deliveryman_id, deliveryId } = req.params;
+
+    const deliveryman = await Deliveryman.findOne({
+      where: { id: deliveryman_id }
+    });
+
+    if (!deliveryman) {
+      return res.status(400).json({ error: 'Deliveryman does not exists' });
+    }
 
     const initialDate = new Date();
-
-    if (initialDate && isBefore(initialDate, new Date()))
-      res.status(400).json({ error: 'Past dates are not allowed !' });
-
     const initialHour = setSeconds(setMinutes(setHours(initialDate, 8), 0), 0);
     const finalHour = setSeconds(setMinutes(setHours(initialDate, 18), 0), 0);
 
-    if (isAfter(initialDate, finalHour) || isBefore(initialDate, initialHour))
-      res
+    if (isAfter(initialDate, finalHour) || isBefore(initialDate, initialHour)) {
+      return res
         .status(400)
         .json({ error: 'Orders pickup only between 08:00AM and 18:00PM' });
+    }
 
     const { count: numbersOfDeliveries } = await Delivery.findAndCountAll({
       where: {
-        deliveryman_id: id,
+        deliveryman_id,
         start_date: {
           [Op.between]: [startOfDay(initialDate), endOfDay(initialDate)]
         }
       }
     });
 
-    if (numbersOfDeliveries >= 5)
-      res.status(400).json({ error: 'maximum deliveries reached' });
+    if (numbersOfDeliveries >= 5) {
+      return res.status(400).json({ error: 'Maximum deliveries reached' });
+    }
 
     const UpdatedDelivery = await Delivery.findOne({
       where: {
-        deliveryman_id: id
+        id: deliveryId,
+        deliveryman_id
       }
     });
+
+    if (!UpdatedDelivery)
+      res.status(400).json({ error: 'Delivery does not exists' });
 
     await UpdatedDelivery.update({
       start_date: initialDate
     });
 
-    return res.json(UpdatedDelivery);
+    return res.status(200).json(UpdatedDelivery);
   }
 }
 

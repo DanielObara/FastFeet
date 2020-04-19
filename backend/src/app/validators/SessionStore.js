@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export default async (req, res, next) => {
+export const createSession = async (req, res, next) => {
   try {
     const schema = Yup.object().shape({
       email: Yup.string()

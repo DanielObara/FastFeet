@@ -7,18 +7,17 @@ import Queue from '../../lib/Queue';
 
 class ProblemController {
   async store(req, res) {
-    const { id } = req.params;
+    const { deliveryId } = req.params;
+    const { description } = req.body;
 
-    const deliveryExists = await Delivery.findByPk(id);
+    const deliveryExists = await Delivery.findByPk(deliveryId);
 
     if (!deliveryExists) {
       return res.status(401).json({ error: 'Delivery not found.' });
     }
 
-    const { description } = req.body;
-
     const problem = await DeliveryProblems.create({
-      delivery_id: id,
+      delivery_id: deliveryId,
       description
     });
 
@@ -58,11 +57,11 @@ class ProblemController {
   }
 
   async show(req, res) {
-    const { id } = req.params;
+    const { deliveryId } = req.params;
 
     const problems = await DeliveryProblems.findAll({
       where: {
-        delivery_id: id
+        delivery_id: deliveryId
       },
       attributes: ['id', 'description', 'created_at'],
       include: [
@@ -78,9 +77,16 @@ class ProblemController {
   }
 
   async delete(req, res) {
-    const { id } = req.params;
+    const { problemId: id } = req.params;
 
-    const delivery = await Delivery.findByPk(id, {
+    const problem = await DeliveryProblems.findByPk(id);
+
+    if (!problem) {
+      return res.status(400).json({ error: "Problem doens't exist" });
+    }
+
+
+    const delivery = await Delivery.findByPk(problem.delivery_id, {
       include: [
         {
           model: Deliveryman,
@@ -98,16 +104,10 @@ class ProblemController {
 
     await delivery.save();
 
-    const problems = await DeliveryProblems.findAll({
-      where: {
-        delivery_id: id
-      }
-    });
-
     if (process.env.NODE_ENV !== 'test') {
       await Queue.add(CancellationMail.key, {
         delivery,
-        problem: problems
+        problem: problem
       });
     }
 
