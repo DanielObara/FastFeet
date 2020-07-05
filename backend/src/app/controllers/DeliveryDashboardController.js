@@ -16,7 +16,7 @@ import File from '../models/File';
 class DeliveryDashboardController {
   async index(req, res) {
     const { id: deliveryman_id } = req.params;
-    const isDone = req.query.isDone == 'true';
+    const isDone = req.query.isDone === 'true';
 
     const { page = 1 } = req.query;
     const LIMIT = 20;
