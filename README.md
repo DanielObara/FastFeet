@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-  <a href="https://insomnia.rest/run/?label=BOOTCAMP%20FASTFEET&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDanielObara%2FFastFeet%2Fmaster%2FInsomnia_2020-04-06.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+  <a href="https://insomnia.rest/run/?label=FastFeet&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDanielObara%2FFastFeet%2Fmaster%2FInsomnia_2020-04-19.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
   
 <p align="center">
