@@ -30,7 +30,7 @@
     "express-async-errors": "^3.1.1",
     "express-brute": "^1.0.1",
     "express-brute-redis": "^0.0.1",
-    "express-handlebars": "^3.1.0",
+    "express-handlebars": "^5.3.1",
     "faker": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.4",
