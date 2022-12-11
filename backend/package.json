@@ -26,7 +26,7 @@
     "daniel-obara": "^5.0.1",
     "date-fns": "^2.9.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
     "express-brute": "^1.0.1",
     "express-brute-redis": "^0.0.1",
